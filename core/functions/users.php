@@ -1,4 +1,13 @@
 <?php
+function update_user($update_data){
+	$update = array();
+	array_walk($update_data, 'array_sanitize');
+
+	foreach ($update_data as $field => $data) {
+		$update[] = $field . ' = \'' . $data . '\'';
+	}
+	mysql_query("UPDATE users SET " . implode(', ', $update). " WHERE user_id = ". $_SESSION['user_id']) or die(mysql_error());
+}
 
 function activate($email, $email_code){
 	$email = mysql_real_escape_string($email);
