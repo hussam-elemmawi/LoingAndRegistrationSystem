@@ -20,11 +20,7 @@ if(empty($_POST) === false){
 	}else{
 		$errors[] = 'ur current password is incorrect';
 	}
-
-
 }
-
-
 
 include 'include/overall/header.php'; 
 
@@ -40,14 +36,14 @@ if(isset($_GET['success']) === true && empty($_GET['success']) === true){
 		?>
 			<p>You must change your password now that you've requested.</p>
 		<?php
-
 	}
+
 	if(empty($_POST) === false && empty($errors) === true){
 	change_password($session_user_id, $_POST['password']);
 	header('Location: changepassword.php?success');
-}else if(empty($errors) === false){
-	echo output_errors($errors);
-}
+	}else if(empty($errors) === false){
+		echo output_errors($errors);
+	}
 
 ?>
 
@@ -69,8 +65,6 @@ if(isset($_GET['success']) === true && empty($_GET['success']) === true){
 			<input type="submit" value="Change password">
 		</li>
 	</lu>
-
-
 
 </form>
 

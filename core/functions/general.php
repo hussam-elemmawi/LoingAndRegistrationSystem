@@ -19,7 +19,7 @@ function protect_page(){
 
 function admin_protect(){
 	global $user_data;	
-	if (is_admin($user_data['user_id']) === false){
+	if (has_access($user_data['user_id'], 1) === false){
 		header('Location: index.php');
 		exit();
 	}
