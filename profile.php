@@ -19,5 +19,3 @@ if (isset($_GET['username']) === true && empty($_GET['username']) === false){
 	exit();
 }
 include 'include/overall/footer.php'; ?> 
-
-

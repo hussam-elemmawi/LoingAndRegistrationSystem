@@ -3,7 +3,7 @@ function recover($mode, $email){
 	$mode = sanitize($mode);
 	$email = sanitize($email);
 
-	$user_data = user_data(user_id_from_email($email), 'first_name', 'username');
+	$user_data = user_data(user_id_from_email($email), 'user_id','first_name', 'username');
 	if ($mode == 'username'){
 		email($email, 'Your username', 
 			"Hello" . $user_data['first_name'] .
@@ -11,18 +11,27 @@ function recover($mode, $email){
 			"\n\n ~ Hussam Elemmawi"
 			);
 	}else if($mode == 'password'){
-		// recover password
+		$generated_password = substr(md5(rand(999, 999999)), 0, 8);
+		change_password($user_data['user_id'], $generated_password);
+
+		update_user($user_data['user_id'], array('password_recover' => '1'));
+
+		email($email, 'Your password recovery', 
+			"Hello" . $user_data['first_name'] .
+			",\n\nYour new password is: ". $generated_password .
+			"\n\n ~ Hussam Elemmawi"
+			);
 	}
 }
 
-function update_user($update_data){
+function update_user($user_id, $update_data){
 	$update = array();
 	array_walk($update_data, 'array_sanitize');
 
 	foreach ($update_data as $field => $data) {
 		$update[] = $field . ' = \'' . $data . '\'';
 	}
-	mysql_query("UPDATE users SET " . implode(', ', $update). " WHERE user_id = ". $_SESSION['user_id']) or die(mysql_error());
+	mysql_query("UPDATE users SET " . implode(', ', $update). " WHERE user_id = '$user_id'") or die(mysql_error());
 }
 
 function activate($email, $email_code){
@@ -41,7 +50,7 @@ function change_password($user_id, $password){
 	$user_id = (int)$user_id;
 	$password = md5($password);
 
-	mysql_query("UPDATE users SET password = '$password' WHERE user_id = $user_id");
+	mysql_query("UPDATE users SET password = '$password', password_recover = 0 WHERE user_id = $user_id");
 }
 
 function register_user($register_data){
