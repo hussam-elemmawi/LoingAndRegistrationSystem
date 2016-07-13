@@ -19,7 +19,8 @@ if(logged_in() === true ){
 		'first_name',
 		'last_name',
 		'email',
-		'password_recover');	
+		'password_recover',
+		'type');	
 
 	if(user_active($user_data['username']) === false){
 		session_destroy();
