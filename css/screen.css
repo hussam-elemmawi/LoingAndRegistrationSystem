@@ -112,6 +112,18 @@ aside {
     border-left:1px dashed #aaa;
     padding-left:15px;
 }
+
+.profile {
+    background: #f9f9f9f;
+    border: 1px dashed #ccc;
+    padding: 5px;
+}
+
+.profile img {
+    width:100%;
+}
+
+
 /* Login */
 #login li.link {
     margin-top:5px;

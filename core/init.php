@@ -21,7 +21,8 @@ if(logged_in() === true ){
 		'email',
 		'password_recover',
 		'type',
-		'allow_email');	
+		'allow_email',
+		'profile');	
 
 	if(user_active($user_data['username']) === false){
 		session_destroy();

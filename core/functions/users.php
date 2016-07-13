@@ -1,4 +1,16 @@
 <?php
+
+function change_profile_image($user_id, $file_temp, $file_extn){
+		$file_path = 'images/profile/' . substr(md5(time()), 0, 10) . '.' . $file_extn;
+		echo $file_path;
+		move_uploaded_file($file_temp, $file_path);
+		$int_user_id = (int) $user_id;
+		$file_path = mysql_real_escape_string($file_path);
+		mysql_query("UPDATE users SET profile = '$file_path' WHERE user_id = '$int_user_id'");
+		header('Location: index.php');
+		exit();
+}
+
 function mail_users($subject, $body){
 	$query = mysql_query("SELECT email, first_name FROM users WHERE allow_email = 1");
 	while(($row = mysql_fetch_assoc($query)) !== false){
