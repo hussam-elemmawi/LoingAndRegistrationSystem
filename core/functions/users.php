@@ -1,4 +1,12 @@
 <?php
+function mail_users($subject, $body){
+	$query = mysql_query("SELECT email, first_name FROM users WHERE allow_email = 1");
+	while(($row = mysql_fetch_assoc($query)) !== false){
+		email($row['email'], $subject, "Hello ". $row[first_name] .", \n\n" . $body);
+	}
+}
+
+
 function has_access($user_id, $type){
 	$user_id = (int)$user_id;
 	$type = (int)$type;
